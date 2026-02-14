@@ -1,0 +1,37 @@
+{
+    "name": "JimatKaki - Save Money Together",
+    "short_name": "JimatKaki",
+    "description": "Community-powered price intelligence platform. Track grocery prices, find the best deals, and save money together.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#8B5CF6",
+    "theme_color": "#8B5CF6",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "shopping",
+        "finance",
+        "lifestyle"
+    ],
+    "screenshots": [
+        {
+            "src": "/screenshot-mobile.png",
+            "sizes": "390x844",
+            "type": "image/png",
+            "form_factor": "narrow"
+        }
+    ]
+}
