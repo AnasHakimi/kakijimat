@@ -1,75 +1,315 @@
-JimatKaki: A Modular ELT-Driven Community Price Engine
-JimatKaki is a digital community utility designed to combat the rising cost of living in Malaysia through a real-time, crowdsourced price governance architecture. By leveraging a modern data stack, it transforms raw community input into verified, actionable insights for hyper-local savings.
+# 🛒 JimatKaki - Community-Powered Price Intelligence
 
-🏗️ Technical Architecture
-Targeting the Best Architecture bounty, this project implements a Medallion (Bronze/Silver/Gold) Data Pipeline to ensure data integrity and scalability.
+> **Built for Krackathon 2026** | A real-time price tracking platform that empowers shoppers to save money together.
 
-1. Ingestion Layer (Bronze)
-Frontend: React (Vite) + Tailwind CSS for a high-performance, responsive UI.
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://jimatkaki.vercel.app)
+[![Backend API](https://img.shields.io/badge/API-Docs-blue)](https://jimatkaki.onrender.com/docs)
 
-API Gateway: FastAPI (Python) serving as a robust middleware to validate ingestion and prevent schema drift.
+---
 
-Identity: A low-friction Guest Identity system utilizing localStorage to maximize community participation while maintaining contributor attribution.
+## 🎯 Overview
 
-2. Transformation Layer (Silver)
-Data Orchestration: Managed via Supabase (PostgreSQL).
+**JimatKaki** (Malay for "Save Money") is a community-driven platform where users report and track grocery prices in real-time. By crowdsourcing price data, we help shoppers find the best deals and make informed purchasing decisions.
 
-Cleaning & Governance: Utilizes dbt (data build tool) principles to standardize raw store names and filter price outliers, ensuring the "Silver" tables are audit-ready and reliable.
+### ✨ Key Features
 
-3. Analytics & Consumption Layer (Gold)
-Real-time Freshness: Materialized views calculate "Price Freshness" indicators (Green/Yellow/Red) based on created_at timestamps to ensure data reliability.
+- 🔍 **Smart Search & Filters** - Find items instantly with category-based filtering
+- 📊 **Live Price Feed** - Real-time community price reports with freshness indicators
+- 🏆 **Gamified Leaderboard** - Top contributors compete for recognition
+- 📱 **Mobile-First Design** - Responsive cartoon-themed UI optimized for all devices
+- ⚡ **Automated Data Pipeline** - dbt transformations running hourly via GitHub Actions
+- 🔗 **Federated Queries** - Trino integration for cross-database analytics
 
-Gamification: A "Hero Leaderboard" logic that aggregates contributor volume to drive community engagement.
+---
 
-🛠️ Tech Stack
-Language: Python (FastAPI), JavaScript (React).
+## 🏗️ Architecture
 
-Database: PostgreSQL via Supabase.
+### Tech Stack
 
-Data Modeling: dbt-inspired SQL transformations.
+**Frontend:**
+- React + Vite
+- Tailwind CSS
+- Deployed on Vercel
 
-Deployment: Vercel (Frontend) & Render (Backend).
+**Backend:**
+- FastAPI (Python)
+- PostgreSQL (Supabase)
+- Deployed on Render
 
-🚀 Deployment Plan
-Phase 1: Standardize raw community submissions using dbt models to handle localized store naming variations.
+**Data Engineering:**
+- dbt (Data Build Tool) - Medallion architecture
+- Trino - Federated query engine
+- GitHub Actions - CI/CD automation
 
-Phase 2: Scale the access layer using Trino for federated queries across multiple data sources (e.g., government open data + community data).
+### Data Pipeline (Medallion Architecture)
 
-Phase 3: Transition to a mobile-first PWA to reach B40 communities with limited device storage.JimatKaki: A Modular ELT-Driven Community Price Engine
-JimatKaki is a digital community utility designed to combat the rising cost of living in Malaysia through a real-time, crowdsourced price governance architecture. By leveraging a modern data stack, it transforms raw community input into verified, actionable insights for hyper-local savings.
+```
+┌─────────────────────────────────────────┐
+│  BRONZE (Raw Data)                      │
+│  price_reports table                    │
+│  - User submissions via FastAPI         │
+└─────────────────────────────────────────┘
+                 ↓ dbt transforms
+┌─────────────────────────────────────────┐
+│  SILVER (Cleaned Data)                  │
+│  silver_price_reports view              │
+│  - Freshness calculations (FRESH/STALE) │
+│  - Data validation & cleaning           │
+└─────────────────────────────────────────┘
+                 ↓ dbt aggregates
+┌─────────────────────────────────────────┐
+│  GOLD (Analytics)                       │
+│  gold_leaderboard view                  │
+│  - User rankings & statistics           │
+│  - Business-ready insights              │
+└─────────────────────────────────────────┘
+```
 
-🏗️ Technical Architecture
-Targeting the Best Architecture bounty, this project implements a Medallion (Bronze/Silver/Gold) Data Pipeline to ensure data integrity and scalability.
+**How dbt Works:**
+1. Users submit prices → FastAPI inserts into Bronze layer
+2. GitHub Actions triggers dbt every hour (or on push)
+3. dbt creates Silver views with freshness logic
+4. dbt creates Gold views with aggregated analytics
+5. FastAPI reads from views → Frontend displays fresh data
 
-1. Ingestion Layer (Bronze)
-Frontend: React (Vite) + Tailwind CSS for a high-performance, responsive UI.
+**How Trino Works:**
+- Enables querying across multiple data sources (PostgreSQL, CSV, S3, etc.)
+- Demonstrates data federation capabilities
+- Used for advanced analytics and cross-database queries
+- Runs locally for demo purposes
 
-API Gateway: FastAPI (Python) serving as a robust middleware to validate ingestion and prevent schema drift.
+---
 
-Identity: A low-friction Guest Identity system utilizing localStorage to maximize community participation while maintaining contributor attribution.
+## 🚀 Quick Start
 
-2. Transformation Layer (Silver)
-Data Orchestration: Managed via Supabase (PostgreSQL).
+### Prerequisites
 
-Cleaning & Governance: Utilizes dbt (data build tool) principles to standardize raw store names and filter price outliers, ensuring the "Silver" tables are audit-ready and reliable.
+- Node.js 18+
+- Python 3.10+
+- PostgreSQL (or Supabase account)
+- Docker (optional, for Trino)
 
-3. Analytics & Consumption Layer (Gold)
-Real-time Freshness: Materialized views calculate "Price Freshness" indicators (Green/Yellow/Red) based on created_at timestamps to ensure data reliability.
+### Local Development
 
-Gamification: A "Hero Leaderboard" logic that aggregates contributor volume to drive community engagement.
+#### 1. Clone Repository
+```bash
+git clone https://github.com/AnasHakimi/jimatkaki.git
+cd jimatkaki
+```
 
-🛠️ Tech Stack
-Language: Python (FastAPI), JavaScript (React).
+#### 2. Backend Setup
+```bash
+cd backend
+pip install -r requirements.txt
 
-Database: PostgreSQL via Supabase.
+# Create .env file
+echo "DATABASE_URL=your_supabase_connection_string" > .env
+echo "SUPABASE_URL=your_supabase_url" >> .env
+echo "SUPABASE_KEY=your_supabase_key" >> .env
 
-Data Modeling: dbt-inspired SQL transformations.
+# Run backend
+python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
 
-Deployment: Vercel (Frontend) & Render (Backend).
+#### 3. Frontend Setup
+```bash
+cd frontend
+npm install
 
-🚀 Deployment Plan
-Phase 1: Standardize raw community submissions using dbt models to handle localized store naming variations.
+# Create .env file
+echo "VITE_API_URL=http://localhost:8000" > .env
 
-Phase 2: Scale the access layer using Trino for federated queries across multiple data sources (e.g., government open data + community data).
+# Run frontend
+npm run dev
+```
 
-Phase 3: Transition to a mobile-first PWA to reach B40 communities with limited device storage.
+#### 4. dbt Setup (Optional)
+```bash
+cd dbt_project
+pip install dbt-core dbt-postgres
+
+# Configure profiles.yml with your database credentials
+dbt debug  # Test connection
+dbt run    # Run transformations
+```
+
+#### 5. Trino Setup (Optional)
+```bash
+cd trino
+docker-compose up -d
+# Access Trino at http://localhost:8080
+```
+
+---
+
+## 📦 Deployment
+
+### Production Stack
+
+- **Frontend**: Vercel
+- **Backend**: Render
+- **Database**: Supabase (PostgreSQL)
+- **dbt**: GitHub Actions (automated hourly)
+
+### Environment Variables
+
+**Vercel (Frontend):**
+```
+VITE_API_URL=https://jimatkaki.onrender.com
+```
+
+**Render (Backend):**
+```
+DATABASE_URL=postgresql://...
+SUPABASE_URL=https://...
+SUPABASE_KEY=...
+```
+
+**GitHub Secrets (dbt):**
+```
+DB_HOST=...
+DB_USER=...
+DB_PASSWORD=...
+DB_PORT=6543
+DB_NAME=postgres
+```
+
+---
+
+## 🎨 Features Showcase
+
+### 1. Live Feed with Search & Filters
+- Grid-based card layout for easy scanning
+- Real-time search by item name or store
+- Category filtering (Bakery, Meat, Dairy, etc.)
+- "Load More" pagination to prevent scroll fatigue
+
+### 2. Smart Freshness Indicators
+- **FRESH** (< 24 hours) - Green badge
+- **STALE** (24-72 hours) - Yellow badge
+- **OLD** (> 72 hours) - Red badge
+
+### 3. Gamified Leaderboard
+- Top contributors ranked by submission count
+- Encourages community participation
+- Real-time updates
+
+### 4. Custom Cartoon Modal
+- Themed success popup on price submission
+- Smooth animations and micro-interactions
+- Consistent with app's playful aesthetic
+
+---
+
+## 🔧 API Endpoints
+
+**Base URL**: `https://jimatkaki.onrender.com`
+
+- `POST /api/report` - Submit a price report
+- `GET /api/feed` - Get live price feed
+- `GET /api/leaderboard` - Get top contributors
+- `GET /docs` - Interactive API documentation (Swagger)
+
+---
+
+## 📊 Data Models
+
+### Bronze Layer
+```sql
+CREATE TABLE price_reports (
+    id UUID PRIMARY KEY,
+    item_name TEXT NOT NULL,
+    category TEXT DEFAULT 'General',
+    price FLOAT NOT NULL,
+    store_name TEXT NOT NULL,
+    reported_by TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+### Silver Layer (dbt View)
+```sql
+CREATE VIEW silver_price_reports AS
+SELECT 
+    *,
+    CASE 
+        WHEN age < INTERVAL '24 hours' THEN 'FRESH'
+        WHEN age < INTERVAL '72 hours' THEN 'STALE'
+        ELSE 'OLD'
+    END as freshness_status
+FROM price_reports;
+```
+
+### Gold Layer (dbt View)
+```sql
+CREATE VIEW gold_leaderboard AS
+SELECT 
+    reported_by,
+    COUNT(*) as report_count,
+    RANK() OVER (ORDER BY COUNT(*) DESC) as rank
+FROM price_reports
+GROUP BY reported_by;
+```
+
+---
+
+## 🧪 Testing
+
+### Manual Testing
+1. Visit the live app: https://jimatkaki.vercel.app
+2. Submit a test price report
+3. Verify it appears in the Live Feed
+4. Check the Leaderboard for your entry
+
+### Database Reset (for fresh testing)
+```sql
+-- In Supabase SQL Editor
+TRUNCATE TABLE price_reports CASCADE;
+```
+
+---
+
+## 🎯 Engineering Highlights
+
+### Why This Architecture?
+
+1. **Separation of Concerns**: App writes raw data, dbt handles analytics
+2. **Automated Pipelines**: GitHub Actions runs dbt hourly without manual intervention
+3. **Scalability**: Views (not materialized tables) keep queries fast as data grows
+4. **Modern Stack**: Demonstrates proficiency in React, FastAPI, dbt, and cloud deployment
+5. **Data Federation**: Trino shows ability to query across multiple data sources
+
+### Performance Optimizations
+
+- Frontend: Vite build optimization, lazy loading
+- Backend: Database connection pooling, indexed queries
+- Data: dbt incremental models (future enhancement)
+
+---
+
+## 👥 Team
+
+**Anas Hakimi** - Full Stack Developer & Data Engineer
+
+- [GitHub](https://github.com/AnasHakimi)
+- [LinkedIn](https://www.linkedin.com/in/anashakimi)
+- [KrackedDevs](https://krackeddevs.com/profile/naskimii)
+
+---
+
+## 📝 License
+
+Built for **Krackathon 2026** - Educational purposes
+
+---
+
+## 🙏 Acknowledgments
+
+- **Krackathon 2026** - For the hackathon opportunity
+- **Supabase** - For the managed PostgreSQL database
+- **Vercel & Render** - For free-tier hosting
+- **dbt Labs** - For the amazing data transformation tool
+
+---
+
+**⭐ Star this repo if you find it helpful!**

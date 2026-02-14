@@ -17,8 +17,8 @@ dbt_project/target/
 dbt_project/logs/
 
 # Trino - Data should persist but maybe ignore large files if any or credentials
-trino/catalog/
-trino/data/
+trino/catalog
+trino/data
 
 # IDEs
 .vscode/
