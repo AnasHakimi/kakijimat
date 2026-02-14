@@ -1,3 +1,125 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --font-body: 'Fredoka', sans-serif;
+    --color-bg: #FFFDF5;
+    /* Cream */
+    --color-text: #1F2937;
+    --color-primary: #8B5CF6;
+    /* Purple */
+    --color-secondary: #F472B6;
+    /* Pink */
+    --color-accent: #FBBF24;
+    /* Yellow */
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    background-image: radial-gradient(#E5E7EB 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: var(--color-text);
+    overflow-x: hidden;
+}
+
+/* CARTOON UI UTILITIES */
+.cartoon-card {
+    background: white;
+    border: 3px solid #000;
+    border-radius: 16px;
+    box-shadow: 6px 6px 0px #000;
+    transition: all 0.2s ease;
+}
+
+.cartoon-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px #000;
+}
+
+.cartoon-btn {
+    background: var(--color-primary);
+    color: white;
+    font-weight: 700;
+    padding: 12px 24px;
+    border: 3px solid #000;
+    border-radius: 12px;
+    box-shadow: 4px 4px 0px #000;
+    transition: all 0.1s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cartoon-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px #000;
+}
+
+.cartoon-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0px 0px 0px #000;
+}
+
+.cartoon-input {
+    background: white;
+    border: 3px solid #000;
+    border-radius: 12px;
+    padding: 12px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 500;
+    box-shadow: 4px 4px 0px #E5E7EB;
+    transition: all 0.2s;
+}
+
+.cartoon-input:focus {
+    outline: none;
+    box-shadow: 4px 4px 0px #000;
+    transform: translate(-1px, -1px);
+}
+
+.cartoon-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 2px solid #000;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    box-shadow: 2px 2px 0px #000;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #FFFDF5;
+    border-left: 3px solid #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+    border: 3px solid #000;
+    border-radius: 20px;
+}
+
+/* Custom scrollbar for leaderboard */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #FDE68A;
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #F59E0B;
+    border: 2px solid #000;
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #D97706;
+}

@@ -1,0 +1,47 @@
+name: dbt Production Run
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 * * * *' # Run every hour in production
+  workflow_dispatch:
+
+env:
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_USER: ${{ secrets.DB_USER }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_PORT: ${{ secrets.DB_PORT }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+
+jobs:
+  dbt_run:
+    name: Run dbt Models
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./dbt_project
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dbt
+        run: |
+          pip install dbt-core dbt-postgres
+
+      - name: Install dbt Dependencies
+        run: dbt deps
+
+      - name: Debug Connection (Optional)
+        run: dbt debug
+
+      - name: Run dbt Models
+        run: dbt run --profiles-dir .

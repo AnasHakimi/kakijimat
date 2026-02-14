@@ -56,15 +56,22 @@ if not dbt_cmd:
 # Path to dbt executable 
 # Assuming script is run with the venv python, dbt should be in scripts folder or path
 # We'll use "dbt" and rely on shell path or try to find it relative to python exec
-python_exec_dir = os.path.dirname(sys.executable)
-dbt_exec = os.path.join(python_exec_dir, 'dbt')
+# Check for dbt in backend/venv first (User's environment)
+backend_venv_dbt = os.path.join(os.path.dirname(__file__), '../backend/venv/Scripts/dbt.exe')
+if os.path.exists(backend_venv_dbt):
+    dbt_exec = backend_venv_dbt
+    print(f"ℹ️ Found dbt in backend venv: {dbt_exec}")
+else:
+    # Fallback to current python env
+    python_exec_dir = os.path.dirname(sys.executable)
+    dbt_exec = os.path.join(python_exec_dir, 'dbt')
 
-# Check if dbt.exe exists (Windows)
-if os.path.exists(dbt_exec + '.exe'):
-    dbt_exec += '.exe'
-elif not os.path.exists(dbt_exec):
-    # Fallback to just "dbt" in path
-    dbt_exec = "dbt"
+    # Check if dbt.exe exists (Windows)
+    if os.path.exists(dbt_exec + '.exe'):
+        dbt_exec += '.exe'
+    elif not os.path.exists(dbt_exec):
+        # Fallback to just "dbt" in path
+        dbt_exec = "dbt"
 
 cmd = [dbt_exec] + dbt_cmd
 

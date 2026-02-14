@@ -40,11 +40,13 @@ def create_report(report: models.PriceReportCreate, db: Session = Depends(get_db
 
 @app.get("/api/feed", response_model=List[models.PriceFeedItem])
 def get_feed(db: Session = Depends(get_db)):
-    try:
-        # Try Gold Layer
-        result = db.execute(text("SELECT * FROM price_feed_mart LIMIT 100"))
-        return result.mappings().all()
-    except Exception:
+    # FORCE BRONZE (Real-time) for Demo
+    # try:
+    #     # Try Gold Layer
+    #     result = db.execute(text("SELECT * FROM price_feed_mart LIMIT 100"))
+    #     return result.mappings().all()
+    # except Exception:
+    if True:
         # Fallback to Bronze
         bronze_result = db.query(sql_models.PriceReport).order_by(sql_models.PriceReport.created_at.desc()).limit(100).all()
         # Mock freshness status
@@ -52,17 +54,21 @@ def get_feed(db: Session = Depends(get_db)):
 
 @app.get("/api/leaderboard", response_model=List[models.Hero])
 def get_leaderboard(db: Session = Depends(get_db)):
-    try:
-        # Try Gold Layer
-        result = db.execute(text("SELECT * FROM hero_leaderboard"))
-        return result.mappings().all()
-    except Exception:
-         # Fallback logic
+    # FORCE BRONZE (Real-time) for Demo
+    # try:
+    #     # Try Gold Layer
+    #     result = db.execute(text("SELECT * FROM hero_leaderboard"))
+    #     return result.mappings().all()
+    # except Exception:
+    if True:
+        # Fallback logic (Bronze Layer Aggregation)
         result = db.query(
             sql_models.PriceReport.reported_by, 
             func.count(sql_models.PriceReport.id).label('total_reports')
-        ).group_by(sql_models.PriceReport.reported_by).order_by(text('total_reports DESC')).limit(5).all()
-        return result
+        ).group_by(sql_models.PriceReport.reported_by).order_by(text('total_reports DESC')).limit(10).all()
+        
+        # Convert to dictionary for Pydantic model
+        return [{"reported_by": row[0], "total_reports": row[1]} for row in result]
 
 @app.get("/")
 def read_root():
