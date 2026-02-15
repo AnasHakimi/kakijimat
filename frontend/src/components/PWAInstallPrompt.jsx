@@ -84,7 +84,7 @@ const PWAInstallPrompt = () => {
                     </div>
 
                     <div>
-                        <h4 className="font-black text-lg text-black leading-tight">Get the App! 🦶</h4>
+                        <h4 className="font-black text-lg text-black leading-tight">Get the App!</h4>
                         <p className="text-sm font-bold text-black/80 mt-1">
                             {platform === 'ios'
                                 ? "Tap 'Share' and then 'Add to Home Screen' to save money on the go!"
