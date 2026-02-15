@@ -6,13 +6,27 @@ const HomePage = ({ heroes }) => {
     return (
         <div className="animate-fade-in space-y-12 px-4">
             <section className="text-center py-12 sm:py-20 relative">
-                <h1 className="text-5xl sm:text-6xl md:text-8xl font-black text-black mb-4 sm:mb-6 drop-shadow-[4px_4px_0px_#fff] px-2">
+                {/* Comic Background Elements - Restored */}
+                <div className="absolute top-10 left-10 text-4xl sm:text-6xl opacity-20 rotate-12">⭐</div>
+                <div className="absolute top-20 right-20 text-4xl sm:text-6xl opacity-15 -rotate-12 hidden sm:block">⚡</div>
+                <div className="absolute top-1/2 left-5 text-3xl sm:text-5xl opacity-10 rotate-45 hidden md:block">✨</div>
+                <div className="absolute top-1/3 right-10 text-3xl sm:text-5xl opacity-10 -rotate-45">💨</div>
+                <div className="absolute bottom-20 left-1/4 text-4xl sm:text-6xl opacity-15 rotate-12 hidden lg:block">🔥</div>
+                <div className="absolute bottom-10 right-10 text-4xl sm:text-6xl opacity-20 -rotate-12">💥</div>
+
+                {/* Shopping themed additions */}
+                <div className="absolute top-5 left-1/2 text-3xl sm:text-4xl opacity-10 -translate-x-1/2 rotate-12">🏷️</div>
+                <div className="absolute top-1/2 right-5 text-3xl sm:text-5xl opacity-15 rotate-12 hidden sm:block">💸</div>
+                <div className="absolute bottom-1/4 left-10 text-3xl sm:text-5xl opacity-10 -rotate-12">💰</div>
+                <div className="absolute top-1/2 right-1/4 text-4xl sm:text-6xl opacity-5 rotate-45 hidden xl:block">🛒</div>
+
+                <h1 className="text-5xl sm:text-6xl md:text-8xl font-black text-black mb-4 sm:mb-6 drop-shadow-[4px_4px_0px_#fff] px-2 animate-float">
                     KakiJimat
                 </h1>
                 <p className="text-lg sm:text-xl md:text-2xl text-gray-700 font-bold max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed bg-white/50 inline-block px-4 rounded-lg">
                     The community-powered price intelligence engine.
                     <br />
-                    <span className="text-purple-600 bg-[#FBBF24] px-2 border-2 border-black shadow-[3px_3px_0px_#000] rotate-2 inline-block ml-2 rounded mt-2 sm:mt-0">Find Cheaper. Buy Smarter.</span>
+                    <span className="text-purple-600 bg-[#FBBF24] px-2 border-2 border-black shadow-[3px_3px_0px_#000] rotate-2 inline-block ml-2 rounded mt-2 sm:mt-0 animate-cartoon-wiggle">Find Cheaper. Buy Smarter.</span>
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 px-4">
                     <Link to="/submit" className="cartoon-btn text-lg sm:text-xl bg-[#F472B6]">

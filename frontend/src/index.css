@@ -123,3 +123,22 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #D97706;
 }
+
+/* CARTOON ANIMATIONS */
+@keyframes cartoon-wiggle {
+    0%, 100% { transform: rotate(2deg); }
+    50% { transform: rotate(-1deg) scale(1.05); }
+}
+
+.animate-cartoon-wiggle {
+    animation: cartoon-wiggle 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
