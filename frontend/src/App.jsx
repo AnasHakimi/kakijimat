@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 import HomePage from './pages/Home';
 import FeedPage from './pages/Feed';
 import SubmitPage from './pages/Submit';
@@ -86,6 +87,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <PWAInstallPrompt />
       </div>
     </Router>
   );

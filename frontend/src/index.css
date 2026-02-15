@@ -126,8 +126,15 @@ body {
 
 /* CARTOON ANIMATIONS */
 @keyframes cartoon-wiggle {
-    0%, 100% { transform: rotate(2deg); }
-    50% { transform: rotate(-1deg) scale(1.05); }
+
+    0%,
+    100% {
+        transform: rotate(2deg);
+    }
+
+    50% {
+        transform: rotate(-1deg) scale(1.05);
+    }
 }
 
 .animate-cartoon-wiggle {
@@ -135,10 +142,41 @@ body {
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .animate-float {
     animation: float 4s ease-in-out infinite;
+}
+
+@keyframes bounce-in {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    70% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-bounce-in {
+    animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
 }
